@@ -44,7 +44,7 @@ window.onload = function() {
 			}
 		}
 		if(arrow_type == "down") { // DOWN
-			if(track < 8) {
+			if(track < 7) {
 				track += 1;
 				track_y += 50;
 			}
@@ -84,7 +84,7 @@ window.onload = function() {
 		} 
 
 		if(arrow == 40) { // DOWN
-			if(track < 8) {
+			if(track < 7) {
 				arrow_type = "down";
 				ctx.drawImage(down_arrow,arrow_box_x,arrow_box_y);
 				press_down = true;
