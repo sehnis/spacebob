@@ -17,7 +17,7 @@ window.onload = function() {
 	sprite.src="img/jump.png";
 	sprite.onload=function() {
 		ctx.drawImage(bars,0,100);
-		ctx.drawImage(sprite, col_x, track_y);
+		ctx.drawImage(goodship, col_x, track_y);
 		ctx.drawImage(none_arrow,arrow_box_x,arrow_box_y);
 	}
 	// SETUP IMAGES
@@ -57,7 +57,7 @@ window.onload = function() {
 		canvas.width = canvas.width;
 		document.getElementById("track_h").innerHTML = track;
 		ctx.drawImage(bars,0,100);
-		ctx.drawImage(sprite,col_x,track_y);
+		ctx.drawImage(goodship,col_x,track_y);
 		ctx.drawImage(none_arrow,550,500);
 		arrow_type = "none"
 	}
