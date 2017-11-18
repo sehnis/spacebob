@@ -9,6 +9,8 @@ window.onload = function() {
 	var arrow_box_x = 130;
 	var arrow_box_y = 500;
 	var track = 1;
+	var tick_count = 0;
+	var tick_mod = 10;	
 	var arrow = 0;
 	var arrow_type = "none";
 	var press_down = false;
@@ -44,6 +46,8 @@ window.onload = function() {
 	heart_empty.src="img/heartred_empty.png";
 	var heart_full = new Image();
 	heart_full.src="img/heartred_full.png";
+	var game_overlay = new Image();
+	game_overlay.src="img/game_overlay.png";
 	// MOVE SPRITE DEPENDING ON ARROW
 	function move_sprite() {
 		if(arrow_type == "up") { // UP
@@ -61,8 +65,6 @@ window.onload = function() {
 		// RESET DRAWN OBJECTS
 		canvas.width = canvas.width;
 		document.getElementById("track_h").innerHTML = track;
-		ctx.drawImage(bars,0,100);
-		ctx.drawImage(goodship,col_x,track_y);
 		ctx.drawImage(none_arrow,550,500);
 		arrow_type = "none"
 	}
@@ -80,12 +82,14 @@ window.onload = function() {
 	// UPDATE PRESS AND ARROW TYPE
 	function handle_key(arrow) {
 
+		current_range = tick_count % tick_mod;
+
 		if(press_down) {
 			return;
 		}
 
 		if(arrow == 38) { // UP
-			if(track != 0) {
+			if(track != 0 && (current_range == 0 || current_range == 9) ) {
 				arrow_type = "up";
 				ctx.drawImage(up_arrow,arrow_box_x,arrow_box_y);
 				press_down = true;
@@ -93,7 +97,7 @@ window.onload = function() {
 		} 
 
 		if(arrow == 40) { // DOWN
-			if(track < 7) {
+			if(track < 7 && (current_range == 0 || current_range == 9)) {
 				arrow_type = "down";
 				ctx.drawImage(down_arrow,arrow_box_x,arrow_box_y);
 				press_down = true;
@@ -111,6 +115,8 @@ window.onload = function() {
 	}
 
 	var bpm_interval = 600;
+	var hit_factor = 20;
+	var hit_window = bpm_interval / hit_factor;
 	var right_edge = 1200;
 
 	var squid_x1 = 1200;
@@ -121,14 +127,6 @@ window.onload = function() {
 	var squid_y2 = 125;
 	var squid_y3 = 225;
 	var squid_y4 = 275;
-	var mtx1 = 1200;
-	var mty = 400;
-	var mtx2 = 1750;
-	var mtx3 = 2300;
-	var mtx4 = 2800;
-	var clx1 = 1200;
-	var clx2 = 2200;
-	var cly = 125;
 	var goodx = col_x;
 	var goody = track_y;
 	var indy_y = arrow_box_y;
@@ -309,7 +307,7 @@ window.onload = function() {
 	function game_over() {
 		ctx.font = "40px Arial";
 		ctx.fillStyle = "white";
-    	ctx.fillText("GAME OVER", 550, 250);
+		ctx.drawImage(game_overlay, 0, 0);
     	game_is_over = true;
 	}
 
