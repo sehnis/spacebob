@@ -10,8 +10,9 @@ window.onload = function() {
 	var arrow_box_y = 500;
 	var track = 1;
 	var arrow = 0;
-	var arrow_type = "none"
+	var arrow_type = "none";
 	var press_down = false;
+	var lives = 3;
 	// CREATE SPRITE
 	var sprite = new Image();
 	sprite.src="img/jump.png";
@@ -39,6 +40,10 @@ window.onload = function() {
 	stars.src="img/stars.png";
 	var beatspecial = new Image();
 	beatspecial.src="img/beatspecial.png";
+	var heart_empty = new Image();
+	heart_empty.src="img/heartred_empty.png";
+	var heart_full = new Image();
+	heart_full.src="img/heartred_full.png";
 	// MOVE SPRITE DEPENDING ON ARROW
 	function move_sprite() {
 		if(arrow_type == "up") { // UP
@@ -135,6 +140,10 @@ window.onload = function() {
 	var indy_x6 = 2450;
 	var starx1 = 0;
 	var starx2 = 1200;
+	var heart_one = heart_full;
+	var heart_two = heart_full;
+	var heart_three = heart_full;
+	var heart_height = 8;
 
 
 
@@ -213,12 +222,96 @@ window.onload = function() {
 		} else {
 			indy_x6 -= 10;
 		}
+		// SCORE
+		drawScore();
+		drawLives();
+		drawHearts();
+
+		detect_hit();
+
+		if (lives == 0) {
+			game_over();
+			lives = 0;
+		}
 
 		requestAnimationFrame(run_movement);
 
 	}
 
+	var score = 0;
+	function drawScore() {
+		ctx.font = "20px Arial";
+		ctx.fillStyle = "white";
+    	ctx.fillText("Score: "+score, 8, 20);
+	}
 
+	function drawLives() {
+		ctx.font = "20px Arial";
+		ctx.fillStyle = "white";
+    	ctx.fillText("Lives: ", 975, 25);
+	}
+
+	var hit = false;
+
+	function detect_hit() {
+		if (squid_x1 == col_x) {
+			if (squid_y1 == track_y) {
+				hit = true;
+			} else if (!game_is_over) {
+				score += 1;
+			}
+		} else if (squid_x2 == col_x) {
+			if (squid_y2 == track_y) {
+				hit = true;
+			} else if (!game_is_over) {
+				score += 1;
+			}
+		} else if (squid_x3 == col_x) {
+			if (squid_y3 == track_y) {
+				hit = true;
+			} else if (!game_is_over) {
+				score += 1;
+			}
+		} else if (squid_x4 == col_x) {
+			if (squid_y4 == track_y) {
+				hit = true;
+			} else if (!game_is_over) {
+				score += 1;
+			}
+		}
+
+		if(hit) {
+			if (lives < 1) {
+				return;
+			}
+			lives -= 1;
+			hit = false;
+		}	
+	}
+
+	function drawHearts() {
+		if (lives == 2) {
+			heart_one = heart_empty;
+		} else if (lives == 1) {
+			heart_two = heart_empty;
+		} else if (lives == 0) {
+			heart_three = heart_empty;
+		}
+		ctx.drawImage(heart_one, 1050, heart_height);
+		ctx.drawImage(heart_two, 1100, heart_height);
+		ctx.drawImage(heart_three, 1150, heart_height);
+
+
+	}
+
+
+	var game_is_over = false;
+	function game_over() {
+		ctx.font = "40px Arial";
+		ctx.fillStyle = "white";
+    	ctx.fillText("GAME OVER", 550, 250);
+    	game_is_over = true;
+	}
 
 	// PLAYS THE GAME
 	setInterval(move_sprite, bpm_interval);
