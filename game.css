@@ -6,6 +6,6 @@ body {
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#6ae3e8', endColorstr='#4bf2b4',GradientType=0 )
 }
 
-#gamewindow {
-	border: 10px white;
+canvas {
+	border: 5px solid white;
 }

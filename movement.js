@@ -28,13 +28,17 @@ window.onload = function() {
 	var none_arrow = new Image();
 	none_arrow.src="img/nonew.png";
 	var bars = new Image();
-	bars.src="img/barstoo.png";
+	bars.src="img/blank.png";
 	var badship = new Image();
 	badship.src="img/tinybad.png";
 	var goodship = new Image();
 	goodship.src="img/goodship.png";
 	var beatmarker = new Image();
 	beatmarker.src="img/beatmarker.png";
+	var stars = new Image();
+	stars.src="img/stars.png";
+	var beatspecial = new Image();
+	beatspecial.src="img/beatspecial.png";
 	// MOVE SPRITE DEPENDING ON ARROW
 	function move_sprite() {
 		if(arrow_type == "up") { // UP
@@ -44,7 +48,7 @@ window.onload = function() {
 			}
 		}
 		if(arrow_type == "down") { // DOWN
-			if(track < 8) {
+			if(track < 7) {
 				track += 1;
 				track_y += 50;
 			}
@@ -102,6 +106,8 @@ window.onload = function() {
 	}
 
 	var bpm_interval = 600;
+	var right_edge = 1200;
+
 	var squid_x1 = 1200;
 	var squid_x2 = 1800;
 	var squid_x3 = 2400;
@@ -122,18 +128,31 @@ window.onload = function() {
 	var goody = track_y;
 	var indy_y = arrow_box_y;
 	var indy_x1 = 1200;
-	var indy_x2 = 1400;
-	var indy_x3 = 1600;
-	var indy_x4 = 1800;
-	var indy_x5 = 2000;
-	var indy_x6 = 2200;
+	var indy_x2 = 1450;
+	var indy_x3 = 1700;
+	var indy_x4 = 1950;
+	var indy_x5 = 2200;
+	var indy_x6 = 2450;
+	var starx1 = 0;
+	var starx2 = 1200;
 
 
 
 	function run_movement() {
 		// RESET CANVAS
-			ctx.clearRect(0, 0, canvas.width, canvas.height);	
-			// SKY + BARS
+		ctx.clearRect(0, 0, canvas.width, canvas.height);	
+		// SKY + BARS
+		ctx.drawImage(stars,starx1,0);
+		ctx.drawImage(stars,starx2,0);
+		if(starx1 < -right_edge) {
+			starx1 = right_edge;
+		} else {
+			starx1 -= 4;
+		}if(starx2 < -right_edge) {
+			starx2 = right_edge;
+		} else {
+			starx2 -= 4;
+		}
 		ctx.drawImage(bars,0,100);
 		//SQUIDS
 		ctx.drawImage(badship, squid_x1, squid_y1);
@@ -142,19 +161,19 @@ window.onload = function() {
 		ctx.drawImage(badship, squid_x4, squid_y4);
 
 		if(squid_x1 < -300) {
-			squid_x1 = 1200;
+			squid_x1 = right_edge;
 		} else {
 			squid_x1 -= 10;
 		}if(squid_x2 < -300) {
-			squid_x2 = 1200;
+			squid_x2 = right_edge;
 		} else {
 			squid_x2 -= 10;
 		}if(squid_x3 < -300) {
-			squid_x3 = 1200;
+			squid_x3 = right_edge;
 		} else {
 			squid_x3 -= 10;
 		}if(squid_x4 < -300) {
-			squid_x4 = 1200;
+			squid_x4 = right_edge;
 		} else {
 			squid_x4 -= 10;
 		}
@@ -168,33 +187,32 @@ window.onload = function() {
 		ctx.drawImage(beatmarker, indy_x3, indy_y);
 		ctx.drawImage(beatmarker, indy_x4, indy_y);
 		ctx.drawImage(beatmarker, indy_x5, indy_y);
-		ctx.drawImage(beatmarker, indy_x6, indy_y);
+		ctx.drawImage(beatspecial, indy_x6, indy_y);
 		if(indy_x1 < -300) {
-			indy_x1 = 1200;
+			indy_x1 = right_edge;
 		} else {
 			indy_x1 -= 10;
 		}if(indy_x2 < -300) {
-			indy_x2 = 1200;
+			indy_x2 = right_edge;
 		} else {
 			indy_x2 -= 10;
 		}if(indy_x3 < -300) {
-			indy_x3 = 1200;
+			indy_x3 = right_edge;
 		} else {
 			indy_x3 -= 10;
 		}if(indy_x4 < -300) {
-			indy_x4 = 1200;
+			indy_x4 = right_edge;
 		} else {
 			indy_x4 -= 10;
 		}if(indy_x5 < -300) {
-			indy_x5 = 1200;
+			indy_x5 = right_edge;
 		} else {
 			indy_x5 -= 10;
 		}if(indy_x6 < -300) {
-			indy_x6 = 1200;
+			indy_x6 = right_edge;
 		} else {
 			indy_x6 -= 10;
 		}
-
 
 		requestAnimationFrame(run_movement);
 
