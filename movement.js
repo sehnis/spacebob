@@ -213,12 +213,18 @@ window.onload = function() {
 		} else {
 			indy_x6 -= 10;
 		}
+		drawScore();
 
 		requestAnimationFrame(run_movement);
 
 	}
 
-
+var score = 0;
+	function drawScore() {
+		ctx.font = "20px Arial";
+		ctx.fillStyle = "black";
+    	ctx.fillText("Score: "+score, 8, 20);
+	}
 
 	// PLAYS THE GAME
 	setInterval(move_sprite, bpm_interval);
