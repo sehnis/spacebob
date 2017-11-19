@@ -414,6 +414,17 @@ function play_game() {
 				failAudio.play();
 			}
 			failPlayed = true;
+			var highscore = localStorage.getItem("highscore");
+
+            		if (highscore !== null) {
+                		if (score > highscore) {
+                    			localStorage.setItem("highscore", score);
+                		}
+            		}
+            		else {
+                		localStorage.setItem("highscore", score);
+            		}
+            		
 		}
 
 		requestAnimationFrame(run_movement);
