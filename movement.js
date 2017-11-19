@@ -1,4 +1,11 @@
 window.onload = function() {
+	var local_high_score = 0;
+	document.onkeydown = function(e) {
+		arrow = window.event ? e.keyCode : e.which;
+		if (arrow == 82) {
+			play_game();
+		}
+	}
 	play_game();
 }
 /*
@@ -103,7 +110,7 @@ function play_game() {
 		}
 		// RESET DRAWN OBJECTS
 		//canvas.width = canvas.width;
-		document.getElementById("track_h").innerHTML = "Incremented steps: " + steps;
+		//document.getElementById("track_h").innerHTML = "Incremented steps: " + steps;
 		//ctx.drawImage(none_arrow,550,500);
 		arrow_type = "none"
 	}
@@ -112,11 +119,39 @@ function play_game() {
 		ctx.drawImage(none_arrow,arrow_box_x,arrow_box_y);
 		
 	}
+
+	var secretS = false;
+	var secretQ = false;
+	var secretU = false;
+	var secretI = false;
+	var secretD = false;
+
 	// UPDATE PRESS AND ARROW TYPE
 	function handle_key(arrow) {
 
 		range_good = if_in_range();
 		current_range = tick_count % tick_mod;
+
+		if (arrow == 82) {
+			location.reload();
+		}
+
+		// SECRET NAUTICAL ANIMAL MODE
+		if (arrow == 83) {
+			secretS = true;
+		} else if (arrow == 81) {
+			secretQ = true;
+		} else if (arrow == 85) {
+			secretU = true;
+		} else if (arrow == 73) {
+			secretI = true;
+		} else if (arrow == 68) {
+			secretD = true;
+		}
+
+		if (secretS && secretQ && secretU && secretI && secretD) {
+			badship = squid;
+		}
 
 		if(press_down) {
 			return;
@@ -188,7 +223,7 @@ function play_game() {
 	var heart_height = 8;
 	var okay_range = 5;
 
-	var object_speed = 14;
+	var object_speed = 9.4;
 	var loop_counts = 0;
 	var variant_range = 60;
 
@@ -230,6 +265,25 @@ function play_game() {
 			starx2 = right_edge;
 		} else {
 			starx2 -= 4;
+		}
+		if (steps > 1150) {
+			object_speed = 14;
+		}
+		if (steps > 2900) {
+			object_speed = 16;
+		}
+		if (steps > 3200) {
+			object_speed = 19;
+		}
+		if (steps > 3500) {
+			object_speed = 22;
+		}
+		if (steps > 4000) {
+			object_speed = 25;
+		}
+		if (steps > 4500) {
+			object_speed = 30;
+			badship = squid;
 		}
 		ctx.drawImage(bars,0,100);
 		//SQUIDS
@@ -340,7 +394,7 @@ function play_game() {
 		okay_range = 1;
 
 		if (if_in_range()) {
-			ctx.drawImage(squid, 900, track_y);
+			// ctx.drawImage(squid, 900, track_y);
 			loop_counts += 1;
 			if (button_pressed && !moved_this_turn) {
 				moved_this_turn = true;
@@ -379,7 +433,7 @@ function play_game() {
     	ctx.fillText("Lives: ", 975, 25);
 	}
 	function detect_hit() {
-		if (squid_x1 < (col_x + 44)) {
+		if (squid_x1 < (col_x + 22)) {
 			if (squid_y1 == track_y && !track0_hit) {
 				hit = true;
 				track0_hit = true;
@@ -388,7 +442,7 @@ function play_game() {
 				track0_scored = true;
 				track0_hit = true;
 			}
-		} else if (squid_x2 < (col_x + 44)) {
+		} else if (squid_x2 < (col_x + 22)) {
 			if (squid_y2 == track_y && !track1_hit) {
 				hit = true;
 				track1_hit = true;
@@ -397,7 +451,7 @@ function play_game() {
 				track1_scored = true;
 				track1_hit = true;
 			}
-		} else if (squid_x3 < (col_x + 44)) {
+		} else if (squid_x3 < (col_x + 22)) {
 			if (squid_y3 == track_y && !track2_hit) {
 				hit = true;
 				track2_hit = true;
@@ -406,7 +460,7 @@ function play_game() {
 				track2_scored = true;
 				track2_hit = true;
 			}
-		} else if (squid_x4 < (col_x + 44)) {
+		} else if (squid_x4 < (col_x + 22)) {
 			if (squid_y4 == track_y && !track3_hit) {
 				hit = true;
 				track3_hit = true;
@@ -415,7 +469,7 @@ function play_game() {
 				track3_scored = true;
 				track3_hit = true;
 			}
-		} else if (squid_x5 < (col_x + 44)) {
+		} else if (squid_x5 < (col_x + 22)) {
 			if (squid_y5 == track_y && !track4_hit) {
 				hit = true;
 				track4_hit = true;
@@ -424,7 +478,7 @@ function play_game() {
 				track4_scored = true;
 				track4_hit = true;
 			}
-		} else if (squid_x6 < (col_x + 44)) {
+		} else if (squid_x6 < (col_x + 22)) {
 			if (squid_y6 == track_y && !track5_hit) {
 				hit = true;
 				track5_hit = true;
@@ -433,7 +487,7 @@ function play_game() {
 				track5_scored = true;
 				track5_hit = true;
 			}
-		} else if (squid_x7 < (col_x + 44)) {
+		} else if (squid_x7 < (col_x + 22)) {
 			if (squid_y7 == track_y && !track6_hit) {
 				hit = true;
 				track6_hit = true;
@@ -442,7 +496,7 @@ function play_game() {
 				track6_scored = true;
 				track6_hit = true;
 			}
-		} else if (squid_x8 < (col_x + 44)) {
+		} else if (squid_x8 < (col_x + 22)) {
 			if (squid_y8 == track_y && !track7_hit) {
 				hit = true;
 				track7_hit = true;
@@ -494,6 +548,8 @@ function play_game() {
 	}
 
 
+
+
 	var game_is_over = false;
 	function game_over() {
 		ctx.font = "40px Arial";
@@ -503,7 +559,7 @@ function play_game() {
 	}
 
 	if (lives == 0) {
-		game
+		game_over();
 	}
 
 	// PLAYS THE GAME
